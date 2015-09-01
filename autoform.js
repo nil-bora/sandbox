@@ -1,53 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+function autoForm(args, parent) {
+    var defaults = {
+        default: 'asdadsSD',
+        email: 'test@test.com',
+        tel: '+380931111111'
+    };
 
-<input type="tel"/><br/><br/>
-<input type="email"/><br/><br/>
-<input type="text" name="email"/><br/><br/>
-<textarea></textarea>
+    args = $.extend({}, defaults, args);
+    parent = typeof parent !== 'undefined' ? parent : 'html';
 
+    var input = $(parent).find('input'),
+        textarea = $(parent).find('textarea');
 
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script>
+    textarea.val(args.default);
+    input.each(function () {
 
-    function autoForm(args, parent) {
-        var defaults = {
-            default: 'asdadsSD',
-            email: 'test@test.com',
-            tel: '+380931111111'
-        };
+        var $this = $(this),
+        type = $this.attr('type'),
+        name = $this.attr('name');
 
-        args = $.extend({}, defaults, args);
-        parent = typeof parent !== 'undefined' ? parent : 'html';
+        if (args[type])
+            $this.val(args[type]);
+        else if (args[name])
+            $this.val(args[name]);
+        else
+            $this.val(args.default);
 
-        var input = $(parent).find('input'),
-            textarea = $(parent).find('textarea');
-
-        textarea.val(args.default);
-        input.each(function () {
-
-            var $this = $(this),
-            type = $this.attr('type'),
-            name = $this.attr('name');
-
-            if (args[type])
-                $this.val(args[type]);
-            else if (args[name])
-                $this.val(args[name]);
-            else
-                $this.val(args.default);
-
-        });
-    }
-
-    autoForm({
-        default: 'RAQ SOOQA'
-    }, 'body');
-</script>
-</body>
-</html>
+    });
+}
+/*
+autoForm({
+    default: 'RAQ SOOQA'
+}, 'body');
+*/
